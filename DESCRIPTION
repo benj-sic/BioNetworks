@@ -19,11 +19,11 @@ Depends:
     tidyverse,
     clusterProfiler,
     org.Hs.eg.db,
-    WGCNA,
     STRINGdb,
     igraph,
     brainGraph,
     RCy3,
     tmod
 Imports:
-  org.Mm.eg.db
+  org.Mm.eg.db,
+  WGCNA
