@@ -15,3 +15,6 @@ VignetteBuilder: knitr
 RoxygenNote: 7.3.1
 URL: https://github.com/yzohdy/BioNetworks
 BugReports: https://github.com/yzohdy/BioNetworks/issues
+Depends: 
+    tibble,
+    ACEt

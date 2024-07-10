@@ -3,3 +3,5 @@
 export(hello)
 export(nio)
 export(printer)
+import(dplyr)
+importFrom(tibble,as_data_frame)

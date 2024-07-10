@@ -6,11 +6,14 @@
 #'
 #' @param x
 #'
+#' @importFrom tibble as_data_frame
+#' @import dplyr
+#'
 #' @return Hell to name
 #' @export
 #'
 #' @examples
 #' hello(youssef)
 nio <- function(x) {
-  print(paste0("Hello",x, "world!"))
+  tibble:as_data_frame(print(paste0("Hello",x, "world!")))
 }
