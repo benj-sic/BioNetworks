@@ -21,4 +21,8 @@ Depends:
     org.Mm.eg.db,
     org.Hs.eg.db,
     WGCNA,
-    STRINGdb
+    STRINGdb,
+    igraph,
+    brainGraph,
+    RCy3,
+    tmod
