@@ -6,7 +6,7 @@
 \usage{
 visualize_net(
   network,
-  Dysregulation = c("Up", "Down"),
+  Dysregulation = c("", "Up", "Down"),
   title = "Interaction Network"
 )
 }
