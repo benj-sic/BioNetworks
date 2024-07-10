@@ -31,7 +31,7 @@ find_k_for_consecutive_dec_phi <- function(column) {
 k_cutoff <- find_k_for_consecutive_dec_phi(rc_coeff.df$Norm.phi)
 
 e <- as_adjacency_matrix(study_network)
-g.RC.coef <- rich_club_coeff(g, k= k_cutoff, weighted = weighted, A= e)
+g.RC.coef <- rich_club_coeff(study_network, k= k_cutoff, weighted = weighted, A= e)
 g.RC <- g.RC.coef$graph
 
 return(g.RC)

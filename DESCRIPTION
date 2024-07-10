@@ -27,3 +27,5 @@ Depends:
 Imports:
   org.Mm.eg.db,
   WGCNA
+
+biocViews:
