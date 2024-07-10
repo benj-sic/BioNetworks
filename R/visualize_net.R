@@ -13,12 +13,15 @@
 #'
 #' @examples visualize_net(network)
 
-visualize_net <- function(network)
+visualize_net <- function(network, Dysregulation = c("Up","Down"), title = "Interaction Network")
 {
-  createNetworkFromIgraph(network, title = "DEGs Interaction Network")
+
+nodescolors <- ifelse(Dysregulation = "Up",paletteColorBrewerGreens, ifelse(Dysregulation = "Down", paletteColorBrewerReds) )
+
+  createNetworkFromIgraph(network, title = title)
   setEdgeLineWidthMapping("weight", widths=c(0,1))
   setEdgeColorDefault("grey")
-  setNodeColorMapping("degree", colors = paletteColorBrewerGreens)
+  setNodeColorMapping("degree", colors = nodescolors)
   setNodeSizeMapping("strength")
 }
 
