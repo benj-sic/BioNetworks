@@ -23,7 +23,7 @@ The goal of BioNetworks is to analyze biological networks using graph theory con
 
 ## Installation
 
-You can install the development version of BioNetworks by:
+You can install the development version of BioNetworks by: (new)
 
 ``` r
 library(devtools)

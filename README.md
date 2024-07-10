@@ -11,7 +11,7 @@ theory concepts ![](man/figures/README-Network.png)
 
 ## Installation
 
-You can install the development version of BioNetworks by:
+You can install the development version of BioNetworks by: (new)
 
 ``` r
 library(devtools)

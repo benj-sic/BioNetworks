@@ -18,7 +18,6 @@ BugReports: https://github.com/yzohdy/BioNetworks/issues
 Depends: 
     tidyverse,
     clusterProfiler,
-    org.Mm.eg.db,
     org.Hs.eg.db,
     WGCNA,
     STRINGdb,
@@ -26,3 +25,5 @@ Depends:
     brainGraph,
     RCy3,
     tmod
+Imports:
+  org.Mm.eg.db

@@ -8,7 +8,8 @@
 #' @return A dataframe with gene-gene co-expression score
 #' @export
 #'
-#' @import WGCNA
+#' @importFrom WGCNA pickSoftThreshold
+#' @importFrom WGCNA adjacency
 #'
 #' @examples genes_coexpression(data = data)
 
