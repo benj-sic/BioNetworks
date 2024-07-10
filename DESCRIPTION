@@ -18,16 +18,16 @@ BugReports: https://github.com/yzohdy/BioNetworks/issues
 biocViews:
 Imports:
   org.Mm.eg.db,
-  WGCNA
+      org.Hs.eg.db
 Depends: 
     tidyverse,
     clusterProfiler,
-    org.Hs.eg.db,
     STRINGdb,
     igraph,
     brainGraph,
     RCy3,
-    tmod
+    tmod,
+    WGCNA
 
 
 
