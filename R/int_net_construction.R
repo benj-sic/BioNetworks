@@ -9,6 +9,7 @@
 #' @export
 #'
 #' @import STRINGdb
+#' @import tidyverse
 #'
 #' @examples int_net_construction(genes_list,species= "Hs", score_threshold=200)
 
@@ -38,6 +39,11 @@ int_net_construction <- function(genes_list,species= c("Hs","Mm"), score_thresho
   ppi <- string_db$add_proteins_description(ppi)
   ppi$to <- ppi$preferred_name
   ppi <- ppi[,2:4]
+
+  ppi <- ppi %>%
+    dplyr::mutate(pair = ifelse(gene1 < gene2, paste(gene1, gene2, sep = "-"), paste(gene2, gene1, sep = "-"))) %>%
+    dplyr::distinct(pair, .keep_all = TRUE) %>%
+    dplyr::select(-pair)
 
   return(ppi)
 
