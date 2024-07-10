@@ -16,7 +16,8 @@
 visualize_net <- function(network, Dysregulation = c("Up","Down"), title = "Interaction Network")
 {
 
-nodescolors <- ifelse(Dysregulation = "Up",paletteColorBrewerReds, ifelse(Dysregulation = "Down", paletteColorBrewerBlues),paletteColorBrewerGreens)
+nodescolors <- ifelse(Dysregulation == "Up",paletteColorBrewerReds,
+                      ifelse(Dysregulation == "Down", paletteColorBrewerBlues,paletteColorBrewerGreens))
 
   createNetworkFromIgraph(network, title = title)
   setEdgeLineWidthMapping("weight", widths=c(0,1))
