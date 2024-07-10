@@ -10,7 +10,8 @@
 #' @return A dataframe with Gene Ontology
 #' @export
 #'
-#' @import clusterProfiler
+#' @importFrom clusterProfiler enrichGO
+#' @import tidyverse
 #' @import org.Mm.eg.db
 #' @import org.Hs.eg.db
 #'

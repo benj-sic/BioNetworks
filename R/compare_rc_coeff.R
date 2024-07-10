@@ -30,10 +30,12 @@ compare_rc_coeff <- function(study_net,rand_nets,weighted= F)
 
 DEGs.g.RC <- rich_club_all(study_net, weighted = weighted)
 
-#3.4- Normalized Rich-club coefficient
+#if (length(rand.phi) > length(DEGs.g.RC$phi)) {rand.phi <- rand.phi[1:length(DEGs.g.RC$phi)]}
+
 norm.RC.phi <- (DEGs.g.RC$phi/rand.phi)
 RC.df <- data.frame(degree = DEGs.g.RC$k, Network.phi = DEGs.g.RC$phi, Rand.phi = rand.phi, Norm.phi = norm.RC.phi)
 RC.df <- RC.df[!is.nan(RC.df$Network.phi), ]
+
 
 
 return(RC.df)

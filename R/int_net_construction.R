@@ -40,10 +40,13 @@ int_net_construction <- function(genes_list,species= c("Hs","Mm"), score_thresho
   ppi$to <- ppi$preferred_name
   ppi <- ppi[,2:4]
 
- # ppi <- ppi %>%
-  #  dplyr::mutate(pair = ifelse(gene1 < gene2, paste(gene1, gene2, sep = "-"), paste(gene2, gene1, sep = "-"))) %>%
-   # dplyr::distinct(pair, .keep_all = TRUE) %>%
-    #dplyr::select(-pair)
+  #Clean_up
+  ppi <- ppi %>% unique() %>% subset(!(from==to))
+
+ ppi <- ppi %>%
+    dplyr::mutate(pair = ifelse(from < to, paste(from, to, sep = "-"), paste(to, from, sep = "-"))) %>%
+    dplyr::distinct(pair, .keep_all = TRUE) %>%
+    dplyr::select(-pair)
 
   return(ppi)
 
