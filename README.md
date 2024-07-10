@@ -1,24 +1,13 @@
----
-output: github_document
----
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
+<!-- README.md is generated from README.Rmd. Please ed  it that file -->
 
 # BioNetworks
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of BioNetworks is to the analysis of biological networks using graph theory concepts
+The goal of BioNetworks is to analyze biological networks using graph
+theory concepts ![](man/figures/README-Network.png)
 
 ## Installation
 
@@ -31,9 +20,10 @@ devtools::install_github("yzohdy/BioNetworks")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to anaylze a set of
+differentially expressed genes (DEGs) or proteins:
 
-```{r example}
+``` r
 library(BioNetworks)
 ## basic example code
 ```
