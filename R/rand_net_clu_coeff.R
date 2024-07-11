@@ -12,10 +12,10 @@
 #' @import tidyverse
 #' @import igraph
 #'
-#' @examples rand_net_clu(rand_networks)
+#' @examples rand_net_clu_coeff(rand_networks)
 #'
 
-rand_net_clu <- function(rand_networks)
+rand_net_clu_coeff <- function(rand_networks)
 {
 clu.phi <- vector()
 for (i in 1:length(rand_networks)) {clu.phi[i] <- transitivity(rand_networks[[i]])}

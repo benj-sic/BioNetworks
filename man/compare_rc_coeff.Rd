@@ -4,7 +4,7 @@
 \alias{compare_rc_coeff}
 \title{Calculate rich club coefficient}
 \usage{
-compare_rc_coeff(study_net, rand_nets, weighted = F)
+compare_rc_coeff(study_net, rand_nets = list(), weighted = F)
 }
 \arguments{
 \item{study_net}{Study network}
@@ -21,6 +21,6 @@ This function calculates the rich club coefficient for the study network and com
 a list of random networks.
 }
 \examples{
-compare_rc_coeff(study_net,rand_nets,weighted = F)
+compare_rc_coeff(study_net,rand_nets= list(),weighted= F)
 
 }

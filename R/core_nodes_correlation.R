@@ -17,9 +17,9 @@
 #' @import igraph
 #' @import tmod
 #'
-#' @examples rc_prediction <- function(rc_eigengenes.df, non_rc_eigengenes.df, outcomes.df, tested_outcome)
+#' @examples core_nodes_correlation <- function(rc_eigengenes.df, non_rc_eigengenes.df, outcomes.df, tested_outcome)
 
-rc_prediction <- function(rc_eigengenes.df, non_rc_eigengenes.df, outcomes.df, tested_outcome) {
+core_nodes_correlation <- function(rc_eigengenes.df, non_rc_eigengenes.df, outcomes.df, tested_outcome) {
 
   # 1. Merging eigengenes with outcomes
   RC.egenes.outcomes <- merge(rc_eigengenes.df, outcomes.df, by = 'row.names')

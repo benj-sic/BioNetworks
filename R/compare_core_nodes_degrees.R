@@ -13,9 +13,9 @@
 #' @import tidyverse
 #' @import igraph
 #'
-#' @examples compare_rc_degrees(study_network, rc_network)
+#' @examples compare_core_nodes_degrees(study_network, rc_network)
 
-compare_rc_degrees <- function(study_network, rc_network)
+compare_core_nodes_degrees <- function(study_network, rc_network)
   {
 RC.genes <- as.data.frame(V(rc_network))
 degree.g.df <- as.data.frame(degree(study_network))

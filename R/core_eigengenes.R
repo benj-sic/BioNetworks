@@ -15,9 +15,9 @@
 #' @import igraph
 #' @import tmod
 #'
-#' @examples compare_rc_degrees(study_network, rc_network)
+#' @examples core_eigengenes(study_network, rc_network)
 
-rc_eigengenes <- function(data, study_network, rc_network)
+core_eigengenes <- function(data, study_network, rc_network)
 {
 
   RC.genes <- as.data.frame(V(rc_network))

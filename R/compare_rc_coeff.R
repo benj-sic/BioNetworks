@@ -15,11 +15,17 @@
 #' @import tidyverse
 #' @import igraph
 #'
-#' @examples compare_rc_coeff(study_net,rand_nets,weighted = F)
+#' @examples compare_rc_coeff(study_net,rand_nets= list(),weighted= F)
+
 #'
-compare_rc_coeff <- function(study_net,rand_nets,weighted= F)
+compare_rc_coeff <- function(study_net,rand_nets= list(),weighted= F)
 
 {
+  if (length(rand_nets) == 0) {
+    stop("The argument 'rand_nets' is empty. Please provide a list of random networks.
+         Use the construct_rand_net() function.")
+  }
+
   r.RC <- list()
   for (i in 1:length(rand_nets)) {
     r.RC[[i]] <- rich_club_all(rand_nets[[i]], weighted = weighted)}

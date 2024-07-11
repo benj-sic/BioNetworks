@@ -16,9 +16,9 @@
 #' @import tidyverse
 #' @import igraph
 #'
-#' @examples rc_nodes(study_network,rc_coeff.df,weighted=F)
+#' @examples core_nodes(study_network,rc_coeff.df,weighted=F)
 
-rc_nodes <- function(study_network,rc_coeff.df,weighted=F)
+core_nodes <- function(study_network,rc_coeff.df,weighted=F)
 
 {
 

@@ -4,10 +4,12 @@
 \alias{construct_network}
 \title{Construct interactive network}
 \usage{
-construct_network(network.df, interaction_column = "col_name")
+construct_network(network.df, interaction_score = "col_name")
 }
 \arguments{
 \item{network.df}{a dataframe with interacting genes/proteins in columns 1 and 2. And an additional column of interaction strength (e.g. co-expression values)}
+
+\item{interaction_score}{Name of column containing the interaction scores}
 }
 \value{
 Returns as interactive network

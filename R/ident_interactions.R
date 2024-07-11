@@ -11,7 +11,7 @@
 #' @import STRINGdb
 #' @import tidyverse
 #'
-#' @examples int_net_construction(genes_list,species= "Hs", score_threshold=200)
+#' @examples ident_interactions(genes_list,species= "Hs", score_threshold=200)
 
 ident_interactions <- function(genes_list,species= c("Hs","Mm"), score_threshold=200){
 

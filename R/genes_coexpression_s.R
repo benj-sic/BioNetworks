@@ -10,9 +10,9 @@
 #'
 #' @import WGCNA
 #'
-#' @examples genes_coexpression(data = data)
+#' @examples genes_coexpression_s(data = data)
 
-genes_coexpression <- function(data = data) {
+genes_coexpression_s <- function(data = data) {
 
 
 sft <- pickSoftThreshold(data, RsquaredCut = 0.8, powerVector = c(1:100),

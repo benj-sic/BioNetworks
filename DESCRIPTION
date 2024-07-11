@@ -27,4 +27,5 @@ Depends:
     brainGraph,
     RCy3,
     tmod,
-    WGCNA
+    WGCNA,
+    Hmisc
