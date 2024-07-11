@@ -49,7 +49,7 @@ DEG.fun <- degs_f_annotation(DEG, species = "Hs")
 
 Before constructing the interaction network, use either of the following
 functions to compute a co-expression score for genes present within your
-dataser.
+dataset.
 
 ### 2.1- Pearson correlation
 
