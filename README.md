@@ -21,9 +21,9 @@ devtools::install_github("yzohdy/BioNetworks")
 ## Workflow
 
 This is a basic example which shows you how to analyze a set of
-differential expressed genes (DEGs) or proteins.The following example
+differential expressed genes (DEGs) or proteins. The following example
 outlines the use of this package to identify a set of DEGs in a
-microarray dataset. However, this package would still work with RNA-Seq
+microarray dataset. However, this package would work just as well with RNA-seq
 or proteomics data.
 
 ``` r
@@ -32,12 +32,11 @@ library(BioNetworks)
 
 ## 1 - Identification of Differentially Expressed Genes/Proteins
 
-The following function is used to simply extract a list of DEGs from
-normalized a microarray dataset. If using RNA-Seq data, simply use
-DESeq2 or similiar packages to identify DEGs.
+The following function is used to extract a list of DEGs from
+a normalized microarray dataset. If using RNA-Seq data, simply use
+the counts table from DESeq2 or a similiar package for DEG identification.
 
 ``` r
-
 #Identification of DEGs from a normalized Nanostring dataset (nano.counts)
 DEG <- microarray_degs(data = nano.counts, control = "CTL", condition = "RX")
 
@@ -85,7 +84,7 @@ interaction from STRING database.
 int.df <- ident_interactions(DEG, species = "Hs")
 
 #Merging interactions with computed co-expression scores
-full_int.df <- merge_int_expr(int.df,s.coexpr.df, int_cols = c("from","to"),coexpr_cols = c("Var1", "Var2"))
+full_int.df <- merge_int_expr(int.df, s.coexpr.df, int_cols = c("from", "to"), coexpr_cols = c("Var1", "Var2"))
 ```
 
 ### 3.2 - Construction and Visualization of Network
@@ -116,8 +115,7 @@ plot_degrees_dist(study.net)
 
 ### 4.2 - Construction of Random Networks
 
-A cornerstone of comparing the topology of a network is by comparing it
-with sets of randomly constructed network. The construct_rand_net()
+A cornerstone of comparing the topology of a network is comparison to sets of randomly constructed networks. The construct_rand_net()
 constructs a list of random networks with of similar weighted degree
 distribution based on Fabien Viger and Matthieu Latapy’s algorithm.
 
@@ -186,6 +184,6 @@ core.nodes.eg <- core_eigengenes(nano.counts,study.net,core.nodes)
 #Calculate the non-core nodes eigengenes
 noncore.nodes.eg <- non_core_eigengenes(nano.counts, study_network, core.nodes, number =100)
 
-#Correlate with specific trait
-core.correlation <- core_nodes_correlation(core.nodes.eg, noncore.nodes.eg, outcomes.df, tested_outcome = "survival")
+#Correlate with a specific trait
+core.correlation <- core_nodes_correlation(core.nodes.eg, noncore.nodes.eg, outcomes.df, tested_outcome="survival")
 ```
