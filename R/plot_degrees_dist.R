@@ -17,7 +17,7 @@
 plot_degrees_dist <- function(network)
 {
   g.RC <- rich_club_all(network)
-  g.RC <- g.RC[!is.nan(phi), ]
+  g.RC <- g.RC[!is.nan(g.RC$phi), ]
   ggplot(g.RC, aes(x = k, y= Nk)) +
     theme_bw() +
     geom_smooth(color= "black", alpha=0) +
