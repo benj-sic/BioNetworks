@@ -56,22 +56,145 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of BioNetworks is to analyze biological networks using graph theory concepts <img src="reference/figures/README-Network.png"></p>
+<p>The goal of BioNetworks is to analyze biological networks using graph theory concepts. <img src="reference/figures/README-Network.png"></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of BioNetworks by: (new)</p>
+<p>Install the Beta version of BioNetworks:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"yzohdy/BioNetworks"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
 </h2>
-<p>This is a basic example which shows you how to anaylze a set of differentially expressed genes (DEGs) or proteins:</p>
+<p>This is a basic example which shows you how to analyze a set of differential expressed genes (DEGs) or proteins.The following example outlines the use of this package to identify a set of DEGs in a microarray dataset. However, this package would still work with RNA-Seq or proteomics data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yzohdy/BioNetworks" class="external-link">BioNetworks</a></span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yzohdy/BioNetworks" class="external-link">BioNetworks</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="id_1--identification-of-differentially-expressed-genes-or-proteins">1- Identification of differentially expressed genes or proteins<a class="anchor" aria-label="anchor" href="#id_1--identification-of-differentially-expressed-genes-or-proteins"></a>
+</h2>
+<p>The following function is used to simply extract a list of DEGs from normalized a microarray dataset. If using RNA-Seq data, simply use DESeq2 or similiar packages to identify DEGs.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Identification of DEGs from a normalized Nanostring dataset (nano.counts)</span></span>
+<span><span class="va">DEG</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/microarray_degs.html">microarray_degs</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nano.counts</span>, control <span class="op">=</span> <span class="st">"CTL"</span>, condition <span class="op">=</span> <span class="st">"RX"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Functional annotation of the identifed DEGs</span></span>
+<span><span class="va">DEG.fun</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/degs_f_annotation.html">degs_f_annotation</a></span><span class="op">(</span><span class="va">DEG</span>, species <span class="op">=</span> <span class="st">"Hs"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="id_2--genes-co-expression">2- Genes co-expression<a class="anchor" aria-label="anchor" href="#id_2--genes-co-expression"></a>
+</h2>
+<p>Before constructing the interaction network, use either of the following functions to compute a co-expression score for genes present within your dataser.</p>
+<div class="section level3">
+<h3 id="id_21--pearson-correlation">2.1- Pearson correlation<a class="anchor" aria-label="anchor" href="#id_21--pearson-correlation"></a>
+</h3>
+<p>The gene_coexpression_r() function simply uses pearson correlation to score the strength of co-expression between different genes.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p.coexpr.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/genes_coexpression_r.html">genes_coexpression_r</a></span><span class="op">(</span><span class="va">nano.counts</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="id_22--scaled-coexpression">2.2- Scaled coexpression<a class="anchor" aria-label="anchor" href="#id_22--scaled-coexpression"></a>
+</h3>
+<p>Another available method for calculating the co-expression values is using the WGCNA package correlation powered analysis. The function genes_coexpression() offers an easy way of using this method.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s.coexpr.df</span> <span class="op">&lt;-</span> <span class="fu">genes_coexpression</span><span class="op">(</span><span class="va">nano.counts</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="id_3--interaction-network-construction">3- Interaction network construction<a class="anchor" aria-label="anchor" href="#id_3--interaction-network-construction"></a>
+</h2>
+<p>Next we construction an interaction network from the pre-identified DEGs.</p>
+<div class="section level3">
+<h3 id="id_31-identification-of-node-interactions">3.1-Identification of node interactions.<a class="anchor" aria-label="anchor" href="#id_31-identification-of-node-interactions"></a>
+</h3>
+<p>First we create an interaction dataframe using pre-identified interaction from STRING database.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Identifying interactions</span></span>
+<span><span class="va">int.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ident_interactions.html">ident_interactions</a></span><span class="op">(</span><span class="va">DEG</span>, species <span class="op">=</span> <span class="st">"Hs"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Merging interactions with computed co-expression scores</span></span>
+<span><span class="va">full_int.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/merge_int_expr.html">merge_int_expr</a></span><span class="op">(</span><span class="va">int.df</span>,<span class="va">s.coexpr.df</span>, int_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"from"</span>,<span class="st">"to"</span><span class="op">)</span>,coexpr_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Var1"</span>, <span class="st">"Var2"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="id_32---construction-and-visulization-of-network">3.2 - Construction and visulization of network<a class="anchor" aria-label="anchor" href="#id_32---construction-and-visulization-of-network"></a>
+</h3>
+<p>The network is then constructed with each node corresponding to a gene and each edge represents nodal interaction weighted by co-expression values.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Network construction</span></span>
+<span><span class="va">study.net</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/construct_network.html">construct_network</a></span><span class="op">(</span><span class="va">full_int.df</span>, interaction_score <span class="op">=</span> <span class="st">"Freq"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Visualize network with Cytoscape - make sure Cytoscape app is open before running this function</span></span>
+<span><span class="fu"><a href="reference/visualize_net.html">visualize_net</a></span><span class="op">(</span><span class="va">study.net</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="id_4--graph-theory-analysis">4- Graph theory analysis<a class="anchor" aria-label="anchor" href="#id_4--graph-theory-analysis"></a>
+</h2>
+<div class="section level3">
+<h3 id="id_41--checking-the-presence-of-a-scale-free-network-topology">4.1- Checking the presence of a scale-free network topology<a class="anchor" aria-label="anchor" href="#id_41--checking-the-presence-of-a-scale-free-network-topology"></a>
+</h3>
+<p>Almost all biological networks exhibit a scale-free topology with centeral highly connected nodes and a decrease in connectivity at the network periphery, show by a power-law distribution of node degrees.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_degrees_dist.html">plot_degrees_dist</a></span><span class="op">(</span><span class="va">study.net</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="id_42--construction-of-random-networks">4.2- Construction of random networks<a class="anchor" aria-label="anchor" href="#id_42--construction-of-random-networks"></a>
+</h3>
+<p>A cornerstone of comparing the topology of a network is by comparing it with sets of randomly constructed network. The construct_rand_net() constructs a list of random networks with of similar weighted degree distribution based on Fabien Viger and Matthieu Latapy’s algorithm.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rand.nets</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/construct_rand_net.html">construct_rand_net</a></span><span class="op">(</span><span class="va">study.net</span>, number <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="id_43--clustering-coefficient">4.3- Clustering coefficient<a class="anchor" aria-label="anchor" href="#id_43--clustering-coefficient"></a>
+</h3>
+<p>We then compare the clustering coefficient of the study network with the randomly constructed networks to ensure the presence of a scale-free network.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Calculate the clustering coefficient for the study networks</span></span>
+<span><span class="va">net.clu.coeff</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/net_clu_coeff.html">net_clu_coeff</a></span><span class="op">(</span><span class="va">study.net</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Calculate the clustering coefficient for the random networks</span></span>
+<span><span class="va">rand.clu.coeff</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rand_net_clu_coeff.html">rand_net_clu_coeff</a></span><span class="op">(</span><span class="va">rand.nets</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#One sample t-test between random networks clustering coefficient and the study network</span></span>
+<span><span class="va">clu.coeff.t.test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">rand.clu.coeff</span>, mu<span class="op">=</span> <span class="va">net.clu.coeff</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="id_44--rich-club-analysis">4.4- Rich-club analysis<a class="anchor" aria-label="anchor" href="#id_44--rich-club-analysis"></a>
+</h3>
+<p>The ‘rich-club’ phenomenon refers to the tendency of nodes with high centrality, the dominant elements of a network, to form tightly interconnected subnetworks, and it is one of the crucial properties accounting for the formation of scale-free biological network. The following functions demonstrate the identification of network core nodes using the rich-club analysis. The compare_rc_coeff() function calculates the rich-club coefficient for both the study network and the list of random networks and calculates a normalized coefficient. The normalized coefficient is then used to set a cut-off to identify the ndoes with the highest degrees of connectivity.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Calculating rich-club coefficient</span></span>
+<span><span class="va">rc.coeff.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compare_rc_coeff.html">compare_rc_coeff</a></span><span class="op">(</span><span class="va">study.net</span>, <span class="va">rand.nets</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Identify core nodes</span></span>
+<span><span class="va">core.nodes</span> <span class="op">&lt;-</span> <span class="fu">rc_nodes</span><span class="op">(</span><span class="va">study.net</span>, <span class="va">rc.coeff.df</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Visualizing the identify core nodes</span></span>
+<span><span class="fu"><a href="reference/visualize_net.html">visualize_net</a></span><span class="op">(</span><span class="va">core.nodes</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Comparing the nodal degrees between the core nodes and other network nodes</span></span>
+<span><span class="fu">compare_rc_degrees</span><span class="op">(</span><span class="va">study.net</span>, <span class="va">core.nodes</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Functional annotation of the core nodes - fix!!</span></span>
+<span><span class="va">core.fun</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/degs_f_annotation.html">degs_f_annotation</a></span><span class="op">(</span><span class="va">core.nodes</span>, species <span class="op">=</span> <span class="st">"Hs"</span><span class="op">)</span> </span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="id_5--correlation-between-core-nodes-and-traits">5- Correlation between core nodes and traits<a class="anchor" aria-label="anchor" href="#id_5--correlation-between-core-nodes-and-traits"></a>
+</h2>
+<p>We then investigate the correlation between the identified core nodes and traits. Correlation are made based on the PCA compute eigengenes for the core nodes. Those correlation are then compared with multiple iterations of random sampling of non-core nodes.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Calculate core nodes eigengenes</span></span>
+<span><span class="va">core.nodes.eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/core_eigengenes.html">core_eigengenes</a></span><span class="op">(</span><span class="va">nano.counts</span>,<span class="va">study.net</span>,<span class="va">core.nodes</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Calculate the non-core nodes eigengenes</span></span>
+<span><span class="va">noncore.nodes.eg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/non_core_eigengenes.html">non_core_eigengenes</a></span><span class="op">(</span><span class="va">nano.counts</span>, <span class="va">study_network</span>, <span class="va">core.nodes</span>, number <span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Correlate with specific trait</span></span>
+<span><span class="va">core.correlation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/core_nodes_correlation.html">core_nodes_correlation</a></span><span class="op">(</span><span class="va">core.nodes.eg</span>, <span class="va">noncore.nodes.eg</span>, <span class="va">outcomes.df</span>, tested_outcome <span class="op">=</span> <span class="st">"survival"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
