@@ -13,9 +13,8 @@
 #'
 #' @examples visualize_net(network)
 
-visualize_net <- function(network, Dysregulation = c("","Up","Down"), title = "Interaction Network")
+visualize_net <- function(network, Dysregulation = "other", title = "Interaction Network")
 {
-
 
 nodescolors <- ifelse(Dysregulation == "Up",paletteColorBrewerReds,
                       ifelse(Dysregulation == "Down", paletteColorBrewerBlues,paletteColorBrewerGreens))
@@ -25,5 +24,6 @@ nodescolors <- ifelse(Dysregulation == "Up",paletteColorBrewerReds,
   setEdgeColorDefault("grey")
   setNodeColorMapping("degree", colors = nodescolors)
   setNodeSizeMapping("strength")
-}
+
+  }
 

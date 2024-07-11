@@ -7,9 +7,11 @@
 compare_rc_coeff(study_net, rand_nets, weighted = F)
 }
 \arguments{
-\item{weighted}{the option to calculate an edge weighted or unweighted rich-club coefficient}
+\item{study_net}{Study network}
 
-\item{rand_networks}{a list of random networks}
+\item{rand_nets}{a list of random networks}
+
+\item{weighted}{the option to calculate an edge weighted or unweighted rich-club coefficient}
 }
 \value{
 Average rich club coefficient for a list of networks
@@ -19,6 +21,6 @@ This function calculates the rich club coefficient for the study network and com
 a list of random networks.
 }
 \examples{
-rand_net_clu(rand_networks)
+compare_rc_coeff(study_net,rand_nets,weighted = F)
 
 }

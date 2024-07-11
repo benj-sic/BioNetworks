@@ -20,6 +20,9 @@ rc_prediction(
 
 \item{tested_outcome}{outcome in the outcomes.df to be tested}
 }
+\value{
+Predictions
+}
 \description{
 Compare the correlation between Rich-club genes expression versus non-Rich-club genes with outcomes,
 using a GLM model with PCA 1, 2 and 3.

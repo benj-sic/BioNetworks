@@ -4,7 +4,8 @@
 #' This function calculates the rich club coefficient for the study network and compares it with
 #' a list of random networks.
 #'
-#' @param rand_networks a list of random networks
+#' @param study_net Study network
+#' @param rand_nets a list of random networks
 #' @param weighted the option to calculate an edge weighted or unweighted rich-club coefficient
 #'
 #' @return Average rich club coefficient for a list of networks
@@ -14,7 +15,7 @@
 #' @import tidyverse
 #' @import igraph
 #'
-#' @examples rand_net_clu(rand_networks)
+#' @examples compare_rc_coeff(study_net,rand_nets,weighted = F)
 #'
 compare_rc_coeff <- function(study_net,rand_nets,weighted= F)
 

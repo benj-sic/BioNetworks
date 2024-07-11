@@ -13,7 +13,7 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1
-URL: https://github.com/yzohdy/BioNetworks
+URL: https://github.com/yzohdy/BioNetworks, https://yzohdy.github.io/BioNetworks/
 BugReports: https://github.com/yzohdy/BioNetworks/issues
 biocViews:
 Imports:
@@ -28,6 +28,3 @@ Depends:
     RCy3,
     tmod,
     WGCNA
-
-
-

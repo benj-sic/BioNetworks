@@ -9,7 +9,7 @@
 #' @param outcomes.df an outcomes dataframe for the same observations
 #' @param tested_outcome outcome in the outcomes.df to be tested
 #'
-#' @return
+#' @return Predictions
 #' @export
 #'
 #' @import brainGraph

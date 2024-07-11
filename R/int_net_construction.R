@@ -1,4 +1,4 @@
-#' @title Interaction network construction
+#' @title Identify interactions
 #'
 #' @description
 #' This function constructs a gene/protein interactive network using interactions from STRING-database
@@ -13,11 +13,7 @@
 #'
 #' @examples int_net_construction(genes_list,species= "Hs", score_threshold=200)
 
-
-
-
-
-int_net_construction <- function(genes_list,species= c("Hs","Mm"), score_threshold=200){
+ident_interactions <- function(genes_list,species= c("Hs","Mm"), score_threshold=200){
 
   sp <- ifelse(species=="Hs",9606,ifelse(species=="Mm", 10090,))
   genes.df <- as.data.frame(genes_list)

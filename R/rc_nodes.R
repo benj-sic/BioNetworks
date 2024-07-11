@@ -21,14 +21,20 @@
 rc_nodes <- function(study_network,rc_coeff.df,weighted=F)
 
 {
-find_k_for_consecutive_dec_phi <- function(column) {
-  for (i in 3:(length(column) - 2)) {
-    if (column[i] < column[i-1] && column[i-1] < column[i-2] &&
-        column[i-2] < column[i-3] && column[i-3] < column[i-4]) {
-      return(i) }}
-  return(NA)}
 
-k_cutoff <- find_k_for_consecutive_dec_phi(rc_coeff.df$Norm.phi)
+
+  find_drop_start_index <- function(column) {
+    max_value <- max(column)
+    max_index <- which(column == max_value)[1]
+    for (i in (max_index + 1):length(column)) {
+      if (column[i] < column[i-1]) {
+        return(i)
+      }
+    }
+    return(NA)
+  }
+
+k_cutoff <- find_drop_start_index(rc_coeff.df$Norm.phi)
 
 e <- as_adjacency_matrix(study_network)
 g.RC.coef <- rich_club_coeff(study_network, k= k_cutoff, weighted = weighted, A= e)

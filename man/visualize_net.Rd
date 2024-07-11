@@ -4,11 +4,7 @@
 \alias{visualize_net}
 \title{Visualize interactive network}
 \usage{
-visualize_net(
-  network,
-  Dysregulation = c("", "Up", "Down"),
-  title = "Interaction Network"
-)
+visualize_net(network, Dysregulation = "other", title = "Interaction Network")
 }
 \arguments{
 \item{network}{an igraph network object}
