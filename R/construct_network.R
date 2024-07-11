@@ -16,7 +16,7 @@
 construct_network <- function(network.df, interaction_score ="col_name")
 
 {
-  DEGs.g <-graph_from_data_frame(network.df[,c(1,2)])
+  DEGs.g <- graph_from_data_frame(network.df[,c(1,2)])
   E(DEGs.g)$weight <- network.df[[interaction_score]]
   V(DEGs.g)$degree <- degree(DEGs.g)
   V(DEGs.g)$node.betweenness <- betweenness(DEGs.g)
