@@ -158,7 +158,7 @@ highest degrees of connectivity.
 rc.coeff.df <- compare_rc_coeff(study.net, rand.nets)
 
 #Identify core nodes
-core.nodes <- rc_nodes(study.net, rc.coeff.df)
+core.nodes <- core_nodes(study.net, rc.coeff.df)
 
 #Visualizing the identify core nodes
 visualize_net(core.nodes)
