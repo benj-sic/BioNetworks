@@ -49,7 +49,7 @@ DEG.fun <- degs_f_annotation(DEG, species = "Hs")
 
 Before constructing the interaction network, use either of the following
 functions to compute a co-expression score for genes present within your
-dataser.
+dataset.
 
 ### 2.1 - Pearson Correlation
 
@@ -67,7 +67,7 @@ using the WGCNA package correlation powered analysis. The function
 genes_coexpression() offers an easy way of using this method.
 
 ``` r
-s.coexpr.df <- genes_coexpression(nano.counts)
+s.coexpr.df <- genes_coexpression_s(nano.counts)
 ```
 
 ## 3 - Interaction Network Construction
