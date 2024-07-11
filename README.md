@@ -67,7 +67,7 @@ using the WGCNA package correlation powered analysis. The function
 genes_coexpression() offers an easy way of using this method.
 
 ``` r
-s.coexpr.df <- genes_coexpression(nano.counts)
+s.coexpr.df <- genes_coexpression_s(nano.counts)
 ```
 
 ## 3- Interaction network construction
