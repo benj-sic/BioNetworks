@@ -13,11 +13,11 @@
 #'
 #' @examples visualize_net(network)
 
-visualize_net <- function(network, Dysregulation = "other", title = "Interaction Network")
+visualize_net <- function(network, direction = "other", title = "Interaction Network")
 {
 
-nodescolors <- ifelse(Dysregulation == "Up", paletteColorBrewerReds,
-                      ifelse(Dysregulation == "Down", paletteColorBrewerBlues, paletteColorBrewerGreens))
+nodescolors <- ifelse(direction == "Up", paletteColorBrewerReds,
+                      ifelse(direction == "Down", paletteColorBrewerBlues, paletteColorBrewerGreens))
 
   createNetworkFromIgraph(network, title = title)
   setEdgeLineWidthMapping("weight", widths = c(0,1))
