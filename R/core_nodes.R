@@ -60,7 +60,7 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,we
 
    print("Normalized rich-club coefficient:",s_k, "(Methods:", method)
 
-  } else {"Error: No method selected"}
+  } {"Error: No method selected"}
 
 
 e <- as_adjacency_matrix(study_network)
