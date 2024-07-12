@@ -18,7 +18,7 @@
 #' @examples merge_int_expr(gene_int.df,gene.coexpr.df, int_cols= c("gene1","gene2"),
 #'  expr_cols=c("Var1","Var2"))
 
-merge_int_expr <- function(gene_int.df,gene.coexpr.df, int_cols= c("int.col1","int.col2"),
+merge_int_expr <- function(gene_int.df, gene.coexpr.df, int_cols= c("int.col1","int.col2"),
                            coexpr_cols=c("exp.col1","exp.col2"))
 
 {
