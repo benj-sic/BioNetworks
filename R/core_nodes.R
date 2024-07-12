@@ -41,8 +41,6 @@ core_nodes <- function(study_network,rc_coeff.df, methods = "all", cut_off = 1,w
     return(NA)
   }
 
-
-
   if(method == "strongest")
 
   {k.c <- find_drop_start_index(rc_coeff.df$Norm.phi)} else
