@@ -4,7 +4,7 @@
 \alias{genes_coexpression}
 \title{Genes co-expression using WGCNA}
 \usage{
-genes_coexpression(data = data, method = c("pearson", "scaled"))
+genes_coexpression(data = data, deg = deg, method = c("pearson", "scaled"))
 }
 \arguments{
 \item{data}{microarray counts table}
