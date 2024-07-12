@@ -61,13 +61,15 @@ DEG.fun <- degs_f_annotation(DEG, species = "Hs")
 
 Before constructing the interaction network, use either of the following
 functions to compute a co-expression score for genes present within your
-dataset.
-
-The gene_coexpression_r() function simply uses pearson correlation to
-score the strength of co-expression between different genes.
+dataset. The gene_coexpression() function calculates the gene
+co-expression scores using either a pearson correlation r or a scaled
+correlation value on the WGCNA functions. Note: The “scale” method is
+optimal for handling large datsets with a large number of genes
+(e.g. RNA-Seq), while pearsons correlation is better for small datasets
+(e.g. mircoarray data).
 
 ``` r
-p.coexpr.df <- genes_coexpression(counts, method = "scaled")
+coexpr.df <- genes_coexpression(counts, method = "scaled")
 ```
 
 ## 3 - Interaction network construction
@@ -81,11 +83,11 @@ First we create an interaction dataframe using pre-identified
 interaction from STRING database.
 
 ``` r
-#Identifying interactions
+#Identifying interactions - DEG is a vector containing gene symbols 
 int.df <- ident_interactions(DEG, species = "Hs")
 
 #Merging interactions with computed co-expression scores
-full_int.df <- merge_int_expr(int.df,s.coexpr.df, int_cols = c("from","to"),coexpr_cols = c("Var1", "Var2"))
+full_int.df <- merge_int_expr(int.df,coexpr.df, int_cols = c("from","to"),coexpr_cols = c("Var1", "Var2"))
 ```
 
 ### 3.2 - Construction and visulization of network
