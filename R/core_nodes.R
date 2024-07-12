@@ -71,7 +71,7 @@ g.RC <- g.RC.coef$graph
 
  gg.RC <- subgraph(study_network, names(V(g.RC)))
 
- if (method == "peak" {
+ if (method == "peak") {
 print(paste("Normalized rich-club coefficient:", max(sub.df$Norm.phi), "(Methods:", method ,")")) }
  {print(paste("Normalized rich-club coefficient:", s_k, "(Methods:", method ,")")) }
 return(gg.RC)
