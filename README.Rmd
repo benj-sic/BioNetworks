@@ -13,9 +13,9 @@ knitr::opts_chunk$set(
 )
 
 traits <- read.csv("man/figures/traits.package.csv")
-nano.counts <- read.csv("man/figures/nano.package.csv")
-row.names(nano.counts) <- nano.counts$STRING_gene
-nano.counts <- nano.counts[,-1]
+counts <- read.csv("man/figures/nano.package.csv")
+row.names(counts) <- counts$STRING_gene
+counts <- counts[,-1]
 
 library(knitr)
 ```
@@ -45,13 +45,13 @@ This is a basic example which shows you how to analyze a set of differential exp
 library(BioNetworks)
 ```
 
-## 1- Identification of differentially expressed genes or proteins
-The following function is used to simply extract a list of DEGs from normalized a microarray dataset. If using RNA-Seq data, simply use DESeq2 or similiar packages to identify DEGs.
+## 1 - Identification of differentially expressed genes or proteins
+The first step of the progress is identifying a set of differentially expressed genes (DEGs) or proteins. If you have a list of DEGs without expression data, you can skip to step 3.
 
-```{r identify degs,message=FALSE, warning=FALSE}
+### 1.1 - Using data from RNA-Sequencing
+```{r identify degs rna-seq,message=FALSE, warning=FALSE,eval=FALSE}
 
-#Identification of DEGs from a normalized Nanostring dataset (nano.counts)
-DEG <- microarray_degs(data = nano.counts, control = "CTL", condition = "RX")
+#Identification of DEGs using DESeq2
 
 #Functional annotation of the identifed DEGs
 DEG.fun <- degs_f_annotation(DEG, species = "Hs")
@@ -62,24 +62,28 @@ subset_DEG.fun <- DEG.fun[1:5, c(2,1,3,6,11)]
 kable(subset_DEG.fun,row.names = FALSE)
 ```
 
-## 2- Genes co-expression
-Before constructing the interaction network, use either of the following functions to compute a co-expression score for genes present within your dataser.
+### 1.2 - Using data from microarray
+```{r identify degs, eval=FALSE,message=FALSE, warning=FALSE}
 
-### 2.1- Pearson correlation
+#Identification of DEGs from a normalized Nanostring dataset (counts)
+DEG <- microarray_degs(data = counts, control = "CTL", condition = "RX")
+
+#Functional annotation of the identifed DEGs
+DEG.fun <- degs_f_annotation(DEG, species = "Hs")
+```
+
+## 2 - Genes co-expression
+Before constructing the interaction network, use either of the following functions to compute a co-expression score for genes present within your dataset.
+
 The gene_coexpression_r() function simply uses pearson correlation to score the strength of co-expression between different genes.
 ```{r coexpr,message=FALSE, warning=FALSE,eval=FALSE}
-p.coexpr.df <- genes_coexpression_r(nano.counts)
+p.coexpr.df <- genes_coexpression(counts, method = "scaled")
 ```
 
-### 2.2- Scaled coexpression
-Another available method for calculating the co-expression values is using the WGCNA package correlation powered analysis. The function genes_coexpression() offers an easy way of using this method.
-```{r coexps, eval=FALSE, message=FALSE, warning=FALSE}
-s.coexpr.df <- genes_coexpression(nano.counts)
-```
-## 3- Interaction network construction
+## 3 - Interaction network construction
 Next we construction an interaction network from the pre-identified DEGs.
 
-### 3.1-Identification of node interactions.
+### 3.1 - Identification of node interactions.
 First we create an interaction dataframe using pre-identified interaction from STRING database.
 ```{r iter, eval=FALSE, message=FALSE, warning=FALSE}
 #Identifying interactions
@@ -99,21 +103,21 @@ study.net <- construct_network(full_int.df, interaction_score = "Freq")
 visualize_net(study.net)
 ```
 
-## 4- Graph theory analysis
+## 4 - Graph theory analysis
 
-### 4.1- Checking the presence of a scale-free network topology
+### 4.1 - Checking the presence of a scale-free network topology
 Almost all biological networks exhibit a scale-free topology with centeral highly connected nodes and a decrease in connectivity at the network periphery, show by a power-law distribution of node degrees.
 ```{r pl,eval=FALSE, message=FALSE, warning=FALSE}
 plot_degrees_dist(study.net)
 ```
 
-### 4.2- Construction of random networks
+### 4.2 - Construction of random networks
 A cornerstone of comparing the topology of a network is by comparing it with sets of randomly constructed network. The construct_rand_net() constructs a list of random networks with of similar weighted degree distribution based on Fabien Viger and Matthieu Latapy's algorithm.
 ```{r ran, eval=FALSE, message=FALSE, warning=FALSE}
 rand.nets <- construct_rand_net(study.net, number = 100)
 ```
 
-### 4.3- Clustering coefficient
+### 4.3 - Clustering coefficient
 We then compare the clustering coefficient of the study network with the randomly constructed networks to ensure the presence of a scale-free network.
 ```{r cc, eval=FALSE, message=FALSE, warning=FALSE}
 #Calculate the clustering coefficient for the study networks
@@ -135,7 +139,7 @@ The ‘rich-club’ phenomenon refers to the tendency of nodes with high central
 rc.coeff.df <- compare_rc_coeff(study.net, rand.nets)
 
 #Identify core nodes
-core.nodes <- rc_nodes(study.net, rc.coeff.df)
+core.nodes <- core_nodes(study.net, rc.coeff.df)
 
 #Visualizing the identify core nodes
 visualize_net(core.nodes)
@@ -147,7 +151,7 @@ compare_rc_degrees(study.net, core.nodes)
 core.fun <- degs_f_annotation(core.nodes, species = "Hs") 
 ```
 
-## 5- Correlation between core nodes and traits
+## 5 - Correlation between core nodes and traits
 We then investigate the correlation between the identified core nodes and traits. Correlation are made based on the PCA compute eigengenes for the core nodes. Those correlation are then compared with multiple iterations of random sampling of non-core nodes.
 
 ```{r predi, eval=FALSE, message=FALSE, warning=FALSE}
