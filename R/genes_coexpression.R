@@ -12,7 +12,7 @@
 #'
 #' @import WGCNA
 #'
-#' @examples genes_coexpression(data = data, method = c("pearson", "scaled"))
+#' @examples genes_coexpression(data = data,deg=deg, method = c("pearson", "scaled"))
 
 genes_coexpression <- function(data = data, deg =deg, method = c("pearson", "scaled")) {
 

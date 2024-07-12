@@ -18,9 +18,9 @@
 #' @import igraph
 #' @import scales
 #'
-#' @examples core_nodes(study_network,rc_coeff.df,weighted=F)
+#' @examples core_nodes(study_network,rc_coeff.df, methods = "all", cut_off = 1,weighted=F)
 
-core_nodes <- function(study_network,rc_coeff.df, methods = "all", cut_off = 1,weighted=F)
+core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 1,weighted=F)
 
 {
 
@@ -43,7 +43,7 @@ core_nodes <- function(study_network,rc_coeff.df, methods = "all", cut_off = 1,w
 
   if(method == "strongest")
 
-  {k.c <- find_drop_start_index(rc_coeff.df$Norm.phi)} else
+  {k.c <- find_drop_start_index(rc_coeff.df$Norm.phi)} else if (method == "all")
 
   {
     k_cutoff <- more_than_(rc_coeff.df$Norm.phi)
@@ -52,7 +52,7 @@ core_nodes <- function(study_network,rc_coeff.df, methods = "all", cut_off = 1,w
     s <- rescale(x, to=c(min(sub.df$Norm.phi):max(sub.df$Norm.phi)))
     s_k <- s[x == cut_off]
     k.c <- sub.df$degree[sub.df$Norm.phi == s_k]
-  }
+  } else {"Error: No method selected"}
 
 
 e <- as_adjacency_matrix(study_network)
