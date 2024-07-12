@@ -18,8 +18,9 @@ BugReports: https://github.com/yzohdy/BioNetworks/issues
 biocViews:
 Imports:
   org.Mm.eg.db,
-  org.Hs.eg.db,
-  tidyverse,
+  org.Hs.eg.db
+Depends: 
+    tidyverse,
     clusterProfiler,
     STRINGdb,
     igraph,
@@ -28,4 +29,3 @@ Imports:
     tmod,
     WGCNA,
     Hmisc
-    

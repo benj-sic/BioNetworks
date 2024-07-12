@@ -12,7 +12,7 @@
 #' @return Network of hub nodes
 #' @export
 #'
-#' @import brainGraph
+#' @importFrom brainGraph rich_club_coeff
 #' @import tidyverse
 #' @import igraph
 #'
@@ -41,7 +41,7 @@ g.RC.coef <- rich_club_coeff(study_network, k= k_cutoff, weighted = weighted, A=
 g.RC <- g.RC.coef$graph
 
  gg.RC <- subgraph(study_network, names(V(g.RC)))
- 
+
 
 return(gg.RC)
 

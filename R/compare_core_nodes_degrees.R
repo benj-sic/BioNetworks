@@ -9,7 +9,6 @@
 #' @return Dataframe with degrees
 #' @export
 #'
-#' @import brainGraph
 #' @import tidyverse
 #' @import igraph
 #'

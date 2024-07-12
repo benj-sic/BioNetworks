@@ -20,19 +20,13 @@
 
 merge_int_expr <- function(gene_int.df,gene.coexpr.df, int_cols= c("int.col1","int.col2"),
                            coexpr_cols=c("exp.col1","exp.col2"))
+
 {
-
-  gene_int.df[int_cols] <- lapply(gene_int.df[int_cols], as.character)
-  gene.coexpr.df[coexpr_cols] <- lapply(gene.coexpr.df[coexpr_cols], as.character)
-
-  gene_int.df <- gene_int.df %>% mutate(across(everything(), ~ if (is.character(.)) toupper(.) else .))
-  gene.coexpr.df <- gene.coexpr.df %>% mutate(across(everything(), ~ if (is.character(.)) toupper(.) else .))
-
-  m_data <- merge(gene_int.df, gene.coexpr.df, by.x =int_cols , by.y = coexpr_cols)
-  return(m_data)
+gene_int.df[int_cols] <- lapply(gene_int.df[int_cols], as.character)
+gene.coexpr.df[coexpr_cols] <- lapply(gene.coexpr.df[coexpr_cols], as.character)
+gene_int.df <- gene_int.df %>% mutate(across(everything(), ~ if (is.character(.)){ toupper(.)} else {.}))
+gene.coexpr.df <- gene.coexpr.df %>% mutate(across(everything(), ~ if (is.character(.)) {toupper(.)} else {.}))
+m_data <- merge(gene_int.df, gene.coexpr.df, by.x =int_cols , by.y = coexpr_cols)
+return(m_data)
 }
-
-
-
-
 

@@ -11,7 +11,8 @@
 #' @return Average rich club coefficient for a list of networks
 #' @export
 #'
-#' @import brainGraph
+#' @importFrom brainGraph rich_club_all
+#'
 #' @import tidyverse
 #' @import igraph
 #'
