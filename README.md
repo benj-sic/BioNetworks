@@ -193,3 +193,7 @@ noncore.nodes.eg <- non_core_eigengenes(nano.counts, study_network, core.nodes, 
 #Correlate with specific trait
 core.correlation <- core_nodes_correlation(core.nodes.eg, noncore.nodes.eg, outcomes.df, tested_outcome = "survival")
 ```
+
+## Disclosure
+
+## Contact

@@ -5,8 +5,9 @@
 #' the sutdy network and random networks
 #'
 #' @param study_network a study network igraph object
-#' @param rc_coeff.df a dataframe containing the calculated rich-club coefficients for the
-#' study network and random networks, along with normalized values. Calculated using the compare_rc_coeff() function.
+#' @param rc_coeff.df a dataframe containing the calculated rich-club coefficients for the study network and random networks, along with normalized values. Calculated using the compare_rc_coeff() function.
+#' @param method method for getting the core nodes: "all" or "strongest
+#' @param cut_off A cut off value for the core nodes. Value between 1-10
 #' @param weighted the option to calculate an edge weighted or unweighted rich-club coefficient
 #'
 #' @return Network of hub nodes
@@ -15,13 +16,19 @@
 #' @importFrom brainGraph rich_club_coeff
 #' @import tidyverse
 #' @import igraph
+#' @import scales
 #'
 #' @examples core_nodes(study_network,rc_coeff.df,weighted=F)
 
-core_nodes <- function(study_network,rc_coeff.df,weighted=F)
+core_nodes <- function(study_network,rc_coeff.df, methods = "all", cut_off = 1,weighted=F)
 
 {
 
+ more_than_ <- function (column) {
+
+   i <- which(column > 1.1)
+   return(i)
+ }
 
   find_drop_start_index <- function(column) {
     max_value <- max(column)
@@ -34,10 +41,24 @@ core_nodes <- function(study_network,rc_coeff.df,weighted=F)
     return(NA)
   }
 
-k_cutoff <- find_drop_start_index(rc_coeff.df$Norm.phi)
+
+
+  if(method == "strongest")
+
+  {k.c <- find_drop_start_index(rc_coeff.df$Norm.phi)} else
+
+  {
+    k_cutoff <- more_than_(rc_coeff.df$Norm.phi)
+    sub.df <- rc_coeff.df[k_cutoff:nrow(rc_coeff.df), ]
+    x <- c(1:10)
+    s <- rescale(x, to=c(min(sub.df$Norm.phi):max(sub.df$Norm.phi)))
+    s_k <- s[x == cut_off]
+    k.c <- sub.df$degree[sub.df$Norm.phi == s_k]
+  }
+
 
 e <- as_adjacency_matrix(study_network)
-g.RC.coef <- rich_club_coeff(study_network, k= k_cutoff, weighted = weighted, A= e)
+g.RC.coef <- rich_club_coeff(study_network, k= k.c, weighted = weighted, A= e)
 g.RC <- g.RC.coef$graph
 
  gg.RC <- subgraph(study_network, names(V(g.RC)))
