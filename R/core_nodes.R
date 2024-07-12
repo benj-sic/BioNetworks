@@ -24,12 +24,6 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,we
 
 {
 
-  more_than_ <- function (column) {
-
-    i <- which(column > 1.1)
-    return(i)
-  }
-
   find_drop_start_index <- function(column) {
     max_value <- max(column)
     max_index <- which(column == max_value)[1]
@@ -41,7 +35,7 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,we
     return(NA)
   }
 
-  if(method == "strongest")
+  if(method == "peak")
 
   {k.c <- find_drop_start_index(rc_coeff.df$Norm.phi)
 
@@ -55,7 +49,7 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,we
     index <- which(sub.df$Norm.phi == max(sub.df$Norm.phi))
     sub.df$Norm.phi[(index + 1):nrow(sub.df)] <- seq(max(sub.df$Norm.phi),2,length.out=nrow(sub.df)-index)
     s <- rescale(x, to=c(min(sub.df$Norm.phi),max(sub.df$Norm.phi)))
-    s_k <- s[x == 10]
+    s_k <- s[x == cut_off]
     k.c <- sub.df$degree[sub.df$Norm.phi >= s_k][1]
 
 
