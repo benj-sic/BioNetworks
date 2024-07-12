@@ -47,11 +47,9 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,we
 
   } else if (method == "all")
 
-
-
   {
-    k_cutoff <- which(rr$Norm.phi > 1.1)[1]
-    sub.df <- rr[k_cutoff:nrow(rr), ]
+    k_cutoff <- which(rc_coeff.df$Norm.phi > 1.1)[1]
+    sub.df <- rc_coeff.df[k_cutoff:nrow(rc_coeff.df), ]
     sub.df <- subset(sub.df,Rand.phi <1)
     x <- seq(0, 10, by = 0.1)
     index <- which(sub.df$Norm.phi == max(sub.df$Norm.phi))
