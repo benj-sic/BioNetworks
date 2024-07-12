@@ -44,7 +44,7 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,we
   if(method == "strongest")
 
   {k.c <- find_drop_start_index(rc_coeff.df$Norm.phi)
-  print(paste("Normalized rich-club coefficient:", max(sub.df$Norm.phi), "(Methods:", method ,")"))
+  
   } else if (method == "all")
 
     
@@ -60,7 +60,7 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,we
    s_k <- s[x == 10]
    k.c <- sub.df$degree[sub.df$Norm.phi >= s_k][1]
 
-  print(paste("Normalized rich-club coefficient:", s_k, "(Methods:", method ,")"))
+ 
    
   } else {"Error: No method selected"}
 
@@ -71,7 +71,9 @@ g.RC <- g.RC.coef$graph
 
  gg.RC <- subgraph(study_network, names(V(g.RC)))
 
-
+ if (method == "peak" {
+print(paste("Normalized rich-club coefficient:", max(sub.df$Norm.phi), "(Methods:", method ,")")) }
+ {print(paste("Normalized rich-club coefficient:", s_k, "(Methods:", method ,")")) }
 return(gg.RC)
 
 }
