@@ -28,4 +28,5 @@ Depends:
     RCy3,
     tmod,
     WGCNA,
-    Hmisc
+    Hmisc,
+    gdata

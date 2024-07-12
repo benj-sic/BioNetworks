@@ -3,8 +3,9 @@
 #' @description
 #' This function calculated genes co-expression using WGCNA soft-power adjusted adjacency matrix
 #'
-#' @param data microarray counts table
+#' @param data Expression counts table
 #' @param deg A vector of differentially expressed genes
+#' @param method The method to use to calculate the co-expression values
 #'
 #' @return A dataframe with gene-gene co-expression score
 #' @export

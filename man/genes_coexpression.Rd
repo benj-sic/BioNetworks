@@ -7,7 +7,11 @@
 genes_coexpression(data = data, deg = deg, method = c("pearson", "scaled"))
 }
 \arguments{
-\item{data}{microarray counts table}
+\item{data}{Expression counts table}
+
+\item{deg}{A vector of differentially expressed genes}
+
+\item{method}{The method to use to calculate the co-expression values}
 }
 \value{
 A dataframe with gene-gene co-expression score
