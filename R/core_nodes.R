@@ -40,6 +40,9 @@ e <- as_adjacency_matrix(study_network)
 g.RC.coef <- rich_club_coeff(study_network, k= k_cutoff, weighted = weighted, A= e)
 g.RC <- g.RC.coef$graph
 
-return(g.RC)
+ gg.RC <- subgraph(study_network, names(V(g.RC)))
+ 
+
+return(gg.RC)
 
 }
