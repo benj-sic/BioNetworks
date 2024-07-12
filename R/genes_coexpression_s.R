@@ -18,7 +18,9 @@ genes_coexpression <- function(data = data, method = c("pearson", "scaled")) {
 
     if (method == "scaled") {
 
-sft <- pickSoftThreshold(data, RsquaredCut = 0.8, powerVector = c(1:100),
+      data.t <- as.data.frame(t(data))
+
+sft <- pickSoftThreshold(data.t, RsquaredCut = 0.8, powerVector = c(1:100),
                          networkType = "unsigned", verbose = 5)
 sft_power <- sft$powerEstimate
 

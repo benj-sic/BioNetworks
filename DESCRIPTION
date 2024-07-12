@@ -2,8 +2,8 @@ Package: BioNetworks
 Type: Package
 Title: Biological Networks Analysis
 Version: 1.0.0
-Author: Youssef M Zohdy <yzohdy.md@gmail.com>
-Maintainer: Youssef M Zohdy <yzohdy.md@gmail.com>
+Author: Youssef M Zohdy <yzohdy.md@gmail.com> , Benjamin Siciliano <ben.siciliano@gmail.com>
+Maintainer: Youssef M Zohdy <yzohdy.md@gmail.com> , Benjamin Siciliano <ben.siciliano@gmail.com>
 Description: This package is created to anaylsis biological networks using graph theory concepts.
 License: GLP-3
 Encoding: UTF-8
