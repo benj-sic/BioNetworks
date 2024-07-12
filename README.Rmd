@@ -102,10 +102,14 @@ study.net <- construct_network(full_int.df, interaction_score = "Freq")
 visualize_net(study.net)
 ```
 
+### 3.3 - Network clustering
+
+
+
 ## 4 - Graph theory analysis
 
 ### 4.1 - Checking the presence of a scale-free network topology
-Almost all biological networks exhibit a scale-free topology with centeral highly connected nodes and a decrease in connectivity at the network periphery, show by a power-law distribution of node degrees.
+Almost all biological networks exhibit a scale-free topology with central highly connected nodes and a decrease in connectivity at the network periphery, show by a power-law distribution of node degrees.
 ```{r pl,eval=FALSE, message=FALSE, warning=FALSE}
 plot_degrees_dist(study.net)
 ```
