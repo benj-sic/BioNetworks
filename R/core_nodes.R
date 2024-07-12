@@ -6,7 +6,7 @@
 #'
 #' @param study_network a study network igraph object
 #' @param rc_coeff.df a dataframe containing the calculated rich-club coefficients for the study network and random networks, along with normalized values. Calculated using the compare_rc_coeff() function.
-#' @param method method for getting the core nodes: "all" or "peak"
+#' @param method method for getting the core nodes: "all" or "strongest
 #' @param cut_off A cut off value for the core nodes. Value between 1-10
 #' @param weighted the option to calculate an edge weighted or unweighted rich-club coefficient
 #'
@@ -20,10 +20,15 @@
 #'
 #' @examples core_nodes(study_network,rc_coeff.df, methods = "all", cut_off = 1,weighted=F)
 
-core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 1,weighted=F)
+core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,weighted=F)
 
 {
 
+  more_than_ <- function (column) {
+
+    i <- which(column > 1.1)
+    return(i)
+  }
 
   find_drop_start_index <- function(column) {
     max_value <- max(column)
@@ -36,31 +41,39 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 1,we
     return(NA)
   }
 
-  if(method == "peak")
+  if(method == "strongest")
 
-  {k.c <- find_drop_start_index(rc_coeff.df$Norm.phi)} else if (method == "all")
+  {k.c <- find_drop_start_index(rc_coeff.df$Norm.phi)
+
+  } else if (method == "all")
+
+
 
   {
-
-    k_cutoff <- which(rc_coeff.df$Norm.phi > 1.1)[1]
-    sub.df <- rc_coeff.df[k_cutoff:nrow(rc_coeff.df), ]
+    k_cutoff <- which(rr$Norm.phi > 1.1)[1]
+    sub.df <- rr[k_cutoff:nrow(rr), ]
     sub.df <- subset(sub.df,Rand.phi <1)
     x <- seq(0, 10, by = 0.1)
+    index <- which(sub.df$Norm.phi == max(sub.df$Norm.phi))
+    sub.df$Norm.phi[(index + 1):nrow(sub.df)] <- seq(max(sub.df$Norm.phi),2,length.out=nrow(sub.df)-index)
     s <- rescale(x, to=c(min(sub.df$Norm.phi),max(sub.df$Norm.phi)))
-    s_k <- s[x == cut_off]
-    k.c <- sub.df$degree[sub.df$Norm.phi == s_k]
+    s_k <- s[x == 10]
+    k.c <- sub.df$degree[sub.df$Norm.phi >= s_k][1]
+
 
 
   } else {"Error: No method selected"}
 
 
-e <- as_adjacency_matrix(study_network)
-g.RC.coef <- rich_club_coeff(study_network, k= k.c, weighted = weighted, A= e)
-g.RC <- g.RC.coef$graph
+  e <- as_adjacency_matrix(study_network)
+  g.RC.coef <- rich_club_coeff(study_network, k= k.c, weighted = weighted, A= e)
+  g.RC <- g.RC.coef$graph
 
- gg.RC <- subgraph(study_network, names(V(g.RC)))
+  gg.RC <- subgraph(study_network, names(V(g.RC)))
 
-
-return(gg.RC)
+  #if (method == "peak")
+  #{print(paste("Normalized rich-club coefficient:", max(sub.df$Norm.phi), "(Methods:", method ,")")) }
+  #{print(paste("Normalized rich-club coefficient:", s_k, "(Methods:", method ,")")) }
+  return(gg.RC)
 
 }
