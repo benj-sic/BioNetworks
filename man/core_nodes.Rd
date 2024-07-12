@@ -17,7 +17,7 @@ core_nodes(
 
 \item{rc_coeff.df}{a dataframe containing the calculated rich-club coefficients for the study network and random networks, along with normalized values. Calculated using the compare_rc_coeff() function.}
 
-\item{method}{method for getting the core nodes: "all" or "strongest}
+\item{method}{method for getting the core nodes: "all" or "peak"}
 
 \item{cut_off}{A cut off value for the core nodes. Value between 1-10}
 
