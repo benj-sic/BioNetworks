@@ -7,20 +7,19 @@
 #' @param study_network a study network igraph object
 #' @param rc_coeff.df a dataframe containing the calculated rich-club coefficients for the study network and random networks, along with normalized values. Calculated using the compare_rc_coeff() function.
 #' @param method method for getting the core nodes: "all" or "strongest
-#' @param cut_off A cut off value for the core nodes. Value between 1-10
+#' @param cutoff A cut off value for the core nodes. Value between 1-10
 #' @param weighted the option to calculate an edge weighted or unweighted rich-club coefficient
 #'
 #' @return Network of hub nodes
 #' @export
 #'
-#' @importFrom brainGraph rich_club_coeff
 #' @import tidyverse
 #' @import igraph
 #' @import scales
 #'
-#' @examples core_nodes(study_network,rc_coeff.df, methods = "all", cut_off = 1,weighted=F)
+#' @examples core_nodes(study_network,rc_coeff.df, methods = "all", cutoff = 1,weighted=F)
 
-core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,weighted=F)
+core_nodes <- function(study_network,rc_coeff.df, method = "all", cutoff = 0,weighted=F)
 
 {
 
@@ -49,7 +48,7 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,we
     index <- which(sub.df$Norm.phi == max(sub.df$Norm.phi))
     sub.df$Norm.phi[(index + 1):nrow(sub.df)] <- seq(max(sub.df$Norm.phi),2,length.out=nrow(sub.df)-index)
     s <- rescale(x, to=c(min(sub.df$Norm.phi),max(sub.df$Norm.phi)))
-    s_k <- s[x == cut_off]
+    s_k <- s[x == cutoff]
     k.c <- sub.df$degree[sub.df$Norm.phi >= s_k][1]
 
 
@@ -58,7 +57,7 @@ core_nodes <- function(study_network,rc_coeff.df, method = "all", cut_off = 0,we
 
 
   e <- as_adjacency_matrix(study_network)
-  g.RC.coef <- rich_club_coeff(study_network, k= k.c, weighted = weighted, A= e)
+  g.RC.coef <- rc_coeff(study_network, k= k.c, weighted = weighted, A= e)
   g.RC <- g.RC.coef$graph
 
   gg.RC <- subgraph(study_network, names(V(g.RC)))

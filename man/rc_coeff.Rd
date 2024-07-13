@@ -2,7 +2,7 @@
 % Please edit documentation in R/rc_coeff.R
 \name{rc_coeff}
 \alias{rc_coeff}
-\title{rc_coeff}
+\title{Rich-club coefficient}
 \usage{
 rc_coeff(g, k = 1, weighted = FALSE, A = NULL)
 }
@@ -15,7 +15,7 @@ rc_coeff(g, k = 1, weighted = FALSE, A = NULL)
 Dataframe with degrees
 }
 \description{
-Comparing the degrees between Rich-club and non-Rich-club genes
+Calculate the rich-club
 }
 \examples{
 compare_core_nodes_degrees(study_network, rc_network)

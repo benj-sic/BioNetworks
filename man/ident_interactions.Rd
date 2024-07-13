@@ -4,7 +4,7 @@
 \alias{ident_interactions}
 \title{Identify interactions}
 \usage{
-ident_interactions(genes_list, species = c("Hs", "Mm"), score_threshold = 200)
+ident_interactions(genes_list, species = c("Hs", "Mm"), threshold = 200)
 }
 \arguments{
 \item{data}{microarray counts table}

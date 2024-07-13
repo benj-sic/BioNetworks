@@ -1,7 +1,7 @@
-#' @title rc_coeff
+#' @title Rich-club coefficient
 #'
 #' @description
-#' Comparing the degrees between Rich-club and non-Rich-club genes
+#' Calculate the rich-club
 #'
 #' @param study_network a study network igraph object
 #' @param rc_network a rich-club network igraph object
@@ -11,12 +11,15 @@
 #'
 #' @import tidyverse
 #' @import igraph
-#' @import gdata
 #'
 #' @examples compare_core_nodes_degrees(study_network, rc_network)
 
 rc_coeff <- function (g, k = 1, weighted = FALSE, A = NULL)
 {
+
+  check_degree <- function(g) {
+    if ('degree' %in% vertex_attr_names(g)) V(g)$degree else degree(g)}
+
   stopifnot(is_igraph(g))
   degs <- check_degree(g)
   Nv <- vcount(g)

@@ -11,12 +11,15 @@
 #'
 #' @import tidyverse
 #' @import igraph
-#' @import gdata
 #'
 #' @examples compare_core_nodes_degrees(study_network, rc_network)
 
 rc_all <- function (g, weighted = FALSE, A = NULL)
 {
+
+  check_degree <- function(g) {
+    if ('degree' %in% vertex_attr_names(g)) V(g)$degree else degree(g)}
+
   stopifnot(is_igraph(g))
   k <- check_degree(g)
   deg_range <- seq_len(max(k))

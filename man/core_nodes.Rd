@@ -8,7 +8,7 @@ core_nodes(
   study_network,
   rc_coeff.df,
   method = "all",
-  cut_off = 1,
+  cutoff = 0,
   weighted = F
 )
 }
@@ -17,9 +17,9 @@ core_nodes(
 
 \item{rc_coeff.df}{a dataframe containing the calculated rich-club coefficients for the study network and random networks, along with normalized values. Calculated using the compare_rc_coeff() function.}
 
-\item{method}{method for getting the core nodes: "all" or "peak"}
+\item{method}{method for getting the core nodes: "all" or "strongest}
 
-\item{cut_off}{A cut off value for the core nodes. Value between 1-10}
+\item{cutoff}{A cut off value for the core nodes. Value between 1-10}
 
 \item{weighted}{the option to calculate an edge weighted or unweighted rich-club coefficient}
 }
@@ -31,5 +31,5 @@ This function identifies rich-club nodes (hubs) using the pre-computed rich-club
 the sutdy network and random networks
 }
 \examples{
-core_nodes(study_network,rc_coeff.df, methods = "all", cut_off = 1,weighted=F)
+core_nodes(study_network,rc_coeff.df, methods = "all", cutoff = 1,weighted=F)
 }

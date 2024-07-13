@@ -9,14 +9,13 @@
 #' @return Visualize the degrees distribution in the interaction network
 #' @export
 #'
-#' @import brainGraph
 #' @import tidyverse
 #'
 #' @examples plot_degrees_dist(network)
 
 plot_degrees_dist <- function(network)
 {
-  g.RC <- rich_club_all(network)
+  g.RC <- rc_all(network)
   g.RC <- g.RC[!is.nan(g.RC$phi), ]
   ggplot(g.RC, aes(x = k, y= Nk)) +
     theme_bw() +
