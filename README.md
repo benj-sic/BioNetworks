@@ -6,7 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of BioNetworks is to analyze biological networks using graph
+BioNetworks an R package for analyzing biological networks using graph
 theory concepts. ![](man/figures/README-Network.png)
 
 ## Installation
@@ -39,14 +39,16 @@ expression data, you can skip to step 3.
 ### 1.1 - Using data from RNA-Sequencing
 
 ``` r
-
 #Identification of DEGs using DESeq2
+dds <- DESeqDataSetFromMatrix(countData = data, colData = coldata, design = ~ condition)
+dd <- DESeq(dds)
+counts <- counts(dd)
 ```
 
 ### 1.2 - Using data from microarray
 
 ``` r
-#Identification of DEGs from a normalized Nanostring dataset (counts)
+#Identification of DEGs from a normalized microarray dataset
 DEG <- microarray_degs(data = counts, control = "CTL", condition = "RX")
 ```
 
@@ -69,10 +71,12 @@ DEGs.
 ### 3.1 - Identification of node interactions.
 
 First we identify interaction between the DEGs using pre-identified PPI
-(protein-protein interactions) from the STRING database.
+(protein-protein interactions) from the STRING database. You can
+increase to threshold in ident_interactions() to filter for PPIs with
+higher confidence of interaction.
 
 ``` r
-#Identifying interactions - DEG is a vector containing gene symbols - you can increase to threshold to filter for PPIs with higher confidence of interaction.
+#Identifying interactions - DEG is a vector containing gene symbols
 int.df <- ident_interactions(DEG, species = "Hs", threshold = 200)
 
 #Merging interactions with computed co-expression scores
