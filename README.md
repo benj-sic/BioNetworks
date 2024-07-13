@@ -6,8 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-BioNetworks an R package for analyzing biological networks using graph
-theory concepts. ![](man/figures/README-Network.png)
+BioNetworks is an R package for analyzing biological networks using
+graph theory concepts. ![](man/figures/README-Network.png)
 
 ## Installation
 
@@ -40,6 +40,7 @@ expression data, you can skip to step 3.
 
 ``` r
 #Identification of DEGs using DESeq2
+library(DESeq2)
 dds <- DESeqDataSetFromMatrix(countData = data, colData = coldata, design = ~ condition)
 dd <- DESeq(dds)
 counts <- counts(dd)
@@ -206,9 +207,8 @@ core.correlation <- core_nodes_correlation(core.nodes.eg, noncore.nodes.eg, outc
 ## Disclosure
 
 BioNetworks uses functions from the following packages. All rights
-reserved to the original package authors. - WGCNA
-(<doi:10.1186/1471-2105-9-559>) - STRINGdb
-(<doi:10.1093/nar/gkac1000>) - igraph (<https://igraph.org>) -
-brainGraph (<https://github.com/cwatson/brainGraph>) - RCy3
-(<doi:10.12688/f1000research.20887.3>) - tmod
+reserved to the original package authors. WGCNA
+(<doi:10.1186/1471-2105-9-559>); STRINGdb (<doi:10.1093/nar/gkac1000>);
+igraph (igraph.org); brainGraph (github.com/cwatson/brainGraph); RCy3
+(<doi:10.12688/f1000research.20887.3>); tmod
 (<doi:10.1093/bioinformatics/btz447>)
