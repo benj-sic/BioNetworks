@@ -11,6 +11,7 @@
 #'
 #' @import tidyverse
 #' @import igraph
+#' @import data.table
 #'
 #' @examples compare_core_nodes_degrees(study_network, rc_network)
 
@@ -23,7 +24,7 @@ rc_all <- function (g, weighted = FALSE, A = NULL)
   stopifnot(is_igraph(g))
   k <- check_degree(g)
   deg_range <- seq_len(max(k))
-  R <- lapply(deg_range, function(x) rich_club_coeff(g, x,
+  R <- lapply(deg_range, function(x) rc_coeff(g, x,
                                                      weighted, A = A))
   phi <- vapply(R, with, numeric(1L), phi)
   Nk <- vapply(R, with, numeric(1L), Nk)

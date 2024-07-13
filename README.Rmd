@@ -145,13 +145,13 @@ rc.coeff.df <- compare_rc_coeff(study.net, rand.nets)
 A rich-club organization is characterized by having a normalized coeffiecient > 1 when compared with random networks; i.e. the study network has a small world organization with increasing node degrees towards the center of the network indicating a "small-world organization." Accordingly, The core_nodes() function identifies the network core nodes using one of two methods "all" or "peak". The "all" method scales the >1 normalized rich-club coefficients between 0-10 giving the user the ability to cut off the core network at vary levels. On the other hand, "peak" identifies the highest value of the normalized rich-club coefficient and uses it as cut-off
 ```{r rcc, eval=FALSE, message=FALSE, warning=FALSE}
 #Identify core nodes
-core.nodes <- core_nodes(study.net, rc.coeff.df, method = "all", cutoff = 0)
+core.nodes.net <- core_nodes(study.net, rc.coeff.df, method = "all", cutoff = 0)
 
 #Visualizing the identify core nodes
 visualize_net(core.nodes)
 
 #Comparing the nodal degrees between the core nodes and other network nodes
-compare_rc_degrees(study.net, core.nodes)
+nodes.degrees.df <- compare_core_nodes_degrees(study.net, core.nodes.net)
 ```
 
 ## 5 - Correlation between core nodes and traits
@@ -159,10 +159,10 @@ We then investigate the correlation between the identified core nodes and traits
 
 ```{r predi, eval=FALSE, message=FALSE, warning=FALSE}
 #Calculate core nodes eigengenes
-core.nodes.eg <- core_eigengenes(nano.counts,study.net,core.nodes)
+core.nodes.eg <- core_eigengenes(counts,study.net,core.nodes.net)
 
 #Calculate the non-core nodes eigengenes
-noncore.nodes.eg <- non_core_eigengenes(nano.counts, study_network, core.nodes, number =100)
+noncore.nodes.eg <- non_core_eigengenes(counts, study.net, core.nodes.net, number =100)
 
 #Correlate with specific trait
 core.correlation <- core_nodes_correlation(core.nodes.eg, noncore.nodes.eg, outcomes.df, tested_outcome = "survival")

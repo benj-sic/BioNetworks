@@ -24,6 +24,9 @@ non_core_eigengenes <- function(data, study_network, rc_network, number =100)
   RC.genes <- as.data.frame(V(rc_network))
   DEG.genes <- as.data.frame(V(study_network))
 
+  rownames(RC.genes) <- toupper(rownames(RC.genes))
+  rownames(DEG.genes) <- toupper(rownames(DEG.genes))
+  rownames(data) <- toupper(rownames(data))
 
   genes.not.RC <- unique(DEG.genes[!(DEG.genes %in% rownames(RC.genes))])
 

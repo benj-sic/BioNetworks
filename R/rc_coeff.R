@@ -11,6 +11,7 @@
 #'
 #' @import tidyverse
 #' @import igraph
+#' @import data.table
 #'
 #' @examples compare_core_nodes_degrees(study_network, rc_network)
 

@@ -184,13 +184,13 @@ rich-club coefficient and uses it as cut-off
 
 ``` r
 #Identify core nodes
-core.nodes <- core_nodes(study.net, rc.coeff.df, method = "all", cutoff = 0)
+core.nodes.net <- core_nodes(study.net, rc.coeff.df, method = "all", cutoff = 0)
 
 #Visualizing the identify core nodes
 visualize_net(core.nodes)
 
 #Comparing the nodal degrees between the core nodes and other network nodes
-compare_rc_degrees(study.net, core.nodes)
+nodes.degrees.df <- compare_core_nodes_degrees(study.net, core.nodes.net)
 ```
 
 ## 5 - Correlation between core nodes and traits
@@ -202,10 +202,10 @@ iterations of random sampling of non-core nodes.
 
 ``` r
 #Calculate core nodes eigengenes
-core.nodes.eg <- core_eigengenes(nano.counts,study.net,core.nodes)
+core.nodes.eg <- core_eigengenes(counts,study.net,core.nodes.net)
 
 #Calculate the non-core nodes eigengenes
-noncore.nodes.eg <- non_core_eigengenes(nano.counts, study_network, core.nodes, number =100)
+noncore.nodes.eg <- non_core_eigengenes(counts, study.net, core.nodes.net, number =100)
 
 #Correlate with specific trait
 core.correlation <- core_nodes_correlation(core.nodes.eg, noncore.nodes.eg, outcomes.df, tested_outcome = "survival")

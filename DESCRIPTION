@@ -28,4 +28,5 @@ Depends:
     tmod,
     WGCNA,
     Hmisc,
-    gdata
+    gdata,
+    data.table
