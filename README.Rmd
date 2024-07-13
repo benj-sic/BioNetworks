@@ -55,6 +55,13 @@ library(DESeq2)
 dds <- DESeqDataSetFromMatrix(countData = data, colData = coldata, design = ~ condition)
 dd <- DESeq(dds)
 counts <- counts(dd)
+
+res <- results(dd, contrast=c("condition", "RX", "CTL"))
+res<- na.omit(res)
+res.df <- as.data.frame(res)
+res.df$genes <- rownames(res.df)
+DEG_up_reg <- res.df[res.df$log2FoldChange > 1 & res.df$padj < 0.05, ]
+DEG_down_reg <- res.df[res.df$log2FoldChange < -1 & res.df$padj < 0.05, ]
 ```
 
 ### 1.2 - Using data from microarray

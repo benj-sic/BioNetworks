@@ -24,7 +24,6 @@ Depends:
     clusterProfiler,
     STRINGdb,
     igraph,
-    brainGraph,
     RCy3,
     tmod,
     WGCNA,
