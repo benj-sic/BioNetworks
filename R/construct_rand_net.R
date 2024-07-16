@@ -8,7 +8,6 @@
 #' @return Visualize the degrees distribution in the interaction network
 #' @export
 #'
-#' @import brainGraph
 #' @import tidyverse
 #' @import igraph
 #'

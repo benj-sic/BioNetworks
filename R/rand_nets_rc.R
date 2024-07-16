@@ -9,7 +9,6 @@
 #' @return Average rich club coefficient for a list of networks
 #' @export
 #'
-#' @import brainGraph
 #' @import tidyverse
 #' @import igraph
 #'
@@ -20,7 +19,7 @@ rand_nets_rc <- function(rand_nets,weighted= F )
 {
 r.RC <- list()
 for (i in 1:length(rand_nets)) {
-  r.RC[[i]] <- rich_club_all(rand_nets[[i]], weighted = weighted)}
+  r.RC[[i]] <- rc_all(rand_nets[[i]], weighted = weighted)}
 
 rand.phi <- matrix(0, nrow = nrow(r.RC[[1]]) , ncol = 1)
 for (row in 1:nrow(r.RC[[1]])) {

@@ -10,7 +10,6 @@
 #' @return Dataframe with degrees
 #' @export
 #'
-#' @import brainGraph
 #' @import tidyverse
 #' @import igraph
 #' @import tmod
@@ -22,6 +21,10 @@ core_eigengenes <- function(data, study_network, rc_network)
 
   RC.genes <- as.data.frame(V(rc_network))
   DEG.genes <- as.data.frame(V(study_network))
+
+  rownames(RC.genes) <- toupper(rownames(RC.genes))
+  rownames(DEG.genes) <- toupper(rownames(DEG.genes))
+  rownames(data) <- toupper(rownames(data))
 
   RC.groups <- data.frame(ID=c("a","b"), Title=c("RC", "All"))
   RC.genes.list <- list(a =c(paste(rownames(RC.genes))), b = c (paste(unique(DEG.genes))))

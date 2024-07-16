@@ -4,14 +4,14 @@
 \alias{non_core_eigengenes}
 \title{Calculate non-rich-club nodes eigengenes}
 \usage{
-non_core_eigengenes(data, study_network, rc_network, number = 100)
+non_core_eigengenes(data, study.net, core.nodes, number = 100)
 }
 \arguments{
 \item{data}{microarray counts dataframe with rownames as genes and observations as columns}
 
-\item{study_network}{a study network igraph object}
+\item{study.net}{a study network igraph object}
 
-\item{rc_network}{a rich-club network igraph object}
+\item{core.nodes}{a rich-club network igraph object}
 
 \item{number}{number of sampling iterations to perform}
 }

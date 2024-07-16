@@ -9,7 +9,6 @@
 #' @export
 #'
 #' @import igraph
-#' @import brainGraph
 #'
 #' @examples construct_network(network.df, interaction_column ="Correlation_r")
 

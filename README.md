@@ -6,8 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of BioNetworks is to analyze biological networks using graph
-theory concepts. ![](man/figures/README-Network.png)
+BioNetworks is an R package for analyzing biological networks using
+graph theory concepts. ![](man/figures/README-Network.png)
 
 ## Installation
 
@@ -39,37 +39,36 @@ expression data, you can skip to step 3.
 ### 1.1 - Using data from RNA-Sequencing
 
 ``` r
-
 #Identification of DEGs using DESeq2
+library(DESeq2)
+dds <- DESeqDataSetFromMatrix(countData = data, colData = coldata, design = ~ condition)
+dd <- DESeq(dds)
+counts <- counts(dd)
 
-#Functional annotation of the identifed DEGs
-DEG.fun <- degs_f_annotation(DEG, species = "Hs")
+res <- results(dd, contrast=c("condition", "RX", "CTL"))
+res<- na.omit(res)
+res.df <- as.data.frame(res)
+res.df$genes <- rownames(res.df)
+DEG_up_reg <- res.df[res.df$log2FoldChange > 1 & res.df$padj < 0.05, ]
+DEG_down_reg <- res.df[res.df$log2FoldChange < -1 & res.df$padj < 0.05, ]
 ```
 
 ### 1.2 - Using data from microarray
 
 ``` r
-
-#Identification of DEGs from a normalized Nanostring dataset (counts)
+#Identification of DEGs from a normalized microarray dataset
 DEG <- microarray_degs(data = counts, control = "CTL", condition = "RX")
-
-#Functional annotation of the identifed DEGs
-DEG.fun <- degs_f_annotation(DEG, species = "Hs")
 ```
 
 ## 2 - Genes co-expression
 
-Before constructing the interaction network, use either of the following
-functions to compute a co-expression score for genes present within your
-dataset. The gene_coexpression() function calculates the gene
-co-expression scores using either a pearson correlation r or a scaled
-correlation value on the WGCNA functions. Note: The “scale” method is
-optimal for handling large datsets with a large number of genes
-(e.g. RNA-Seq), while pearsons correlation is better for small datasets
-(e.g. mircoarray data).
+Before constructing the interaction network, compute a co-expression
+score for DEGs. The gene_coexpression() function calculates the gene
+co-expression scores using either a pearson correlation “pearson” or a
+scaled correlation value using the WGCNA algorithms “scaled”.
 
 ``` r
-coexpr.df <- genes_coexpression(counts, method = "scaled")
+coexpr.df <- genes_coexpression(data= counts, deg = DEG, method = "scaled")
 ```
 
 ## 3 - Interaction network construction
@@ -79,12 +78,14 @@ DEGs.
 
 ### 3.1 - Identification of node interactions.
 
-First we create an interaction dataframe using pre-identified
-interaction from STRING database.
+First we identify interaction between the DEGs using pre-identified PPI
+(protein-protein interactions) from the STRING database. You can
+increase to threshold in ident_interactions() to filter for PPIs with
+higher confidence of interaction.
 
 ``` r
-#Identifying interactions - DEG is a vector containing gene symbols 
-int.df <- ident_interactions(DEG, species = "Hs")
+#Identifying interactions - DEG is a vector containing gene symbols
+int.df <- ident_interactions(DEG, species = "Hs", threshold = 200)
 
 #Merging interactions with computed co-expression scores
 full_int.df <- merge_int_expr(int.df,coexpr.df, int_cols = c("from","to"),coexpr_cols = c("Var1", "Var2"))
@@ -99,12 +100,17 @@ values.
 ``` r
 #Network construction
 study.net <- construct_network(full_int.df, interaction_score = "Freq")
+```
 
-#Visualize network with Cytoscape - make sure Cytoscape app is open before running this function
+Make sure to open the Cytoscape application before running
+visualize_net()
+
+``` r
+#Visualize network with Cytoscape
 visualize_net(study.net)
 ```
 
-### 3.3 - Network clustering
+### 3.3 - Network subclustering
 
 ## 4 - Graph theory analysis
 
@@ -153,27 +159,38 @@ centrality, the dominant elements of a network, to form tightly
 interconnected subnetworks, and it is one of the crucial properties
 accounting for the formation of scale-free biological network. The
 following functions demonstrate the identification of network core nodes
-using the rich-club analysis. The compare_rc_coeff() function calculates
-the rich-club coefficient for both the study network and the list of
-random networks and calculates a normalized coefficient. The normalized
-coefficient is then used to set a cut-off to identify the ndoes with the
-highest degrees of connectivity.
+using the rich-club analysis.
+
+The compare_rc_coeff() function calculates the rich-club coefficient for
+both the study network and the list of random networks and calculates a
+normalized coefficient. The normalized coefficient is then used to set a
+cut-off to identify the ndoes with the highest degrees of connectivity.
 
 ``` r
 #Calculating rich-club coefficient
 rc.coeff.df <- compare_rc_coeff(study.net, rand.nets)
+```
 
+A rich-club organization is characterized by having a normalized
+coeffiecient \> 1 when compared with random networks; i.e. the study
+network has a small world organization with increasing node degrees
+towards the center of the network indicating a “small-world
+organization.” Accordingly, The core_nodes() function identifies the
+network core nodes using one of two methods “all” or “peak”. The “all”
+method scales the \>1 normalized rich-club coefficients between 0-10
+giving the user the ability to cut off the core network at vary levels.
+On the other hand, “peak” identifies the highest value of the normalized
+rich-club coefficient and uses it as cut-off
+
+``` r
 #Identify core nodes
-core.nodes <- core_nodes(study.net, rc.coeff.df)
+core.nodes.net <- core_nodes(study.net, rc.coeff.df, method = "all", cutoff = 0)
 
 #Visualizing the identify core nodes
 visualize_net(core.nodes)
 
 #Comparing the nodal degrees between the core nodes and other network nodes
-compare_rc_degrees(study.net, core.nodes)
-
-#Functional annotation of the core nodes - fix!!
-core.fun <- degs_f_annotation(core.nodes, species = "Hs") 
+nodes.degrees.df <- compare_core_nodes_degrees(study.net, core.nodes.net)
 ```
 
 ## 5 - Correlation between core nodes and traits
@@ -185,11 +202,20 @@ iterations of random sampling of non-core nodes.
 
 ``` r
 #Calculate core nodes eigengenes
-core.nodes.eg <- core_eigengenes(nano.counts,study.net,core.nodes)
+core.nodes.eg <- core_eigengenes(counts,study.net,core.nodes.net)
 
 #Calculate the non-core nodes eigengenes
-noncore.nodes.eg <- non_core_eigengenes(nano.counts, study_network, core.nodes, number =100)
+noncore.nodes.eg <- non_core_eigengenes(counts, study.net, core.nodes.net, number =100)
 
 #Correlate with specific trait
 core.correlation <- core_nodes_correlation(core.nodes.eg, noncore.nodes.eg, outcomes.df, tested_outcome = "survival")
 ```
+
+## Disclosure
+
+BioNetworks uses functions from the following packages. All rights
+reserved to the original package authors. WGCNA
+(<doi:10.1186/1471-2105-9-559>); STRINGdb (<doi:10.1093/nar/gkac1000>);
+igraph (igraph.org); brainGraph (github.com/cwatson/brainGraph); RCy3
+(<doi:10.12688/f1000research.20887.3>); tmod
+(<doi:10.1093/bioinformatics/btz447>)

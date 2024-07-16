@@ -9,9 +9,9 @@
 #' @return Dataframe with degrees
 #' @export
 #'
-#' @import brainGraph
 #' @import tidyverse
 #' @import igraph
+#' @import gdata
 #'
 #' @examples compare_core_nodes_degrees(study_network, rc_network)
 

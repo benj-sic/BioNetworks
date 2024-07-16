@@ -11,7 +11,7 @@
 #' @return Average rich club coefficient for a list of networks
 #' @export
 #'
-#' @import brainGraph
+#'
 #' @import tidyverse
 #' @import igraph
 #'
@@ -28,14 +28,14 @@ compare_rc_coeff <- function(study_net,rand_nets= list(),weighted= F)
 
   r.RC <- list()
   for (i in 1:length(rand_nets)) {
-    r.RC[[i]] <- rich_club_all(rand_nets[[i]], weighted = weighted)}
+    r.RC[[i]] <- rc_all(rand_nets[[i]], weighted = weighted)}
 
   rand.phi <- matrix(0, nrow = nrow(r.RC[[1]]) , ncol = 1)
   for (row in 1:nrow(r.RC[[1]])) {
     row_values <- sapply(r.RC, function(x) x[row,]$phi)
     rand.phi[row, ] <- mean(row_values)}
 
-DEGs.g.RC <- rich_club_all(study_net, weighted = weighted)
+DEGs.g.RC <- rc_all(study_net, weighted = weighted)
 
 #if (length(rand.phi) > length(DEGs.g.RC$phi)) {rand.phi <- rand.phi[1:length(DEGs.g.RC$phi)]}
 

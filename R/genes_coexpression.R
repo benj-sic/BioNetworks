@@ -3,22 +3,26 @@
 #' @description
 #' This function calculated genes co-expression using WGCNA soft-power adjusted adjacency matrix
 #'
-#' @param data microarray counts table
+#' @param data Expression counts table
+#' @param deg A vector of differentially expressed genes
+#' @param method The method to use to calculate the co-expression values
 #'
 #' @return A dataframe with gene-gene co-expression score
 #' @export
 #'
 #' @import WGCNA
 #'
-#' @examples genes_coexpression(data = data, method = c("pearson", "scaled"))
+#' @examples genes_coexpression(data = data,deg=deg, method = c("pearson", "scaled"))
 
-genes_coexpression <- function(data = data, method = c("pearson", "scaled")) {
+genes_coexpression <- function(data = data, deg =deg, method = c("pearson", "scaled")) {
 
-
+data <- data[deg,]
 
     if (method == "scaled") {
 
-sft <- pickSoftThreshold(data, RsquaredCut = 0.8, powerVector = c(1:100),
+      data.t <- as.data.frame(t(data))
+
+sft <- pickSoftThreshold(data.t, RsquaredCut = 0.8, powerVector = c(1:100),
                          networkType = "unsigned", verbose = 5)
 sft_power <- sft$powerEstimate
 

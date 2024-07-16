@@ -12,7 +12,6 @@
 #' @return Predictions
 #' @export
 #'
-#' @import brainGraph
 #' @import tidyverse
 #' @import igraph
 #' @import tmod
