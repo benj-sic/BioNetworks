@@ -29,4 +29,5 @@ Depends:
     WGCNA,
     Hmisc,
     gdata,
-    data.table
+    data.table,
+    uchardet
