@@ -20,7 +20,7 @@ ident_interactions <- function(genes_list, species = c("Hs","Mm"), threshold = 2
   genes.df$genes <- genes.df[,1]
 
   string_db <- STRINGdb$new(version="12.0", species=sp,
-                            score_threshold=score_threshold, network_type="full", input_directory="")
+                            threshold=score_threshold, network_type="full", input_directory="")
 
   mapped <- string_db$map(genes.df, "genes", removeUnmappedRows = TRUE)
 
