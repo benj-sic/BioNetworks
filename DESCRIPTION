@@ -18,7 +18,8 @@ BugReports: https://github.com/yzohdy/BioNetworks/issues
 biocViews:
 Imports:
   org.Mm.eg.db,
-  org.Hs.eg.db
+  org.Hs.eg.db,
+  uchardet
 Depends: 
     tidyverse,
     clusterProfiler,
@@ -29,5 +30,4 @@ Depends:
     WGCNA,
     Hmisc,
     gdata,
-    data.table,
-    uchardet
+    data.table
